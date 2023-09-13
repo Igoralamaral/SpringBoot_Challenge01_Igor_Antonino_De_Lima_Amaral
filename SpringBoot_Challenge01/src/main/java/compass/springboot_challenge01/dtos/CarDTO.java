@@ -1,39 +1,36 @@
-package compass.springboot_challenge01.models;
+package compass.springboot_challenge01.dtos;
 
-import jakarta.persistence.*;
-import org.hibernate.validator.constraints.NotBlank;
+import compass.springboot_challenge01.models.Car;
 
-@Entity
-public class Car {
+public class CarDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chassi_id")
     private Long chassiId;
-
-    @NotBlank(message = "Insert a valid model")
     private String model;
-    @NotBlank(message = "Choose one of this brands: Ford, Chevrolet, BMW or Volvo")
     private String brand;
-    @NotBlank(message = "Insert a valid color")
     private String color;
-    @NotBlank(message = "Insert a valid fabrication year in format: year/year")
-    @Column(name = "fabrication_year")
     private String fabricationYear;
 
-    public Car(String model, String brand, String color, String fabricationYear) {
+    public CarDTO(String model, String brand, String color, String fabricationYear) {
         this.model = model;
         this.brand = brand;
         this.color = color;
         this.fabricationYear = fabricationYear;
     }
 
-    public Car() {
-
+    public CarDTO(Car car) {
+        this.chassiId = car.getChassiId();
+        this.model = car.getModel();
+        this.brand = car.getBrand();
+        this.color = car.getColor();
+        this.fabricationYear = car.getFabricationYear();;
     }
 
     public Long getChassiId() {
         return chassiId;
+    }
+
+    public void setChassiId(Long chassiId) {
+        this.chassiId = chassiId;
     }
 
     public String getModel() {
