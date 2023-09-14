@@ -24,7 +24,7 @@ public class ResourceExceptionHandler {
         error.setError("ID not found");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
