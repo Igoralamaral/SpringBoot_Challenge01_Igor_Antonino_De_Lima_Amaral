@@ -1,7 +1,11 @@
 package compass.springboot_challenge01.dtos;
 
 import compass.springboot_challenge01.models.Car;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 public class CarDTO {
 
     private Long chassiId;
@@ -23,45 +27,5 @@ public class CarDTO {
         this.brand = car.getBrand();
         this.color = car.getColor();
         this.fabricationYear = car.getFabricationYear();;
-    }
-
-    public Long getChassiId() {
-        return chassiId;
-    }
-
-    public void setChassiId(Long chassiId) {
-        this.chassiId = chassiId;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public void setModel(String model) {
-        this.model = model;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public void setBrand(String brand) {
-        this.brand = brand;
-    }
-
-    public String getColor() {
-        return color;
-    }
-
-    public void setColor(String color) {
-        this.color = color;
-    }
-
-    public String getFabricationYear() {
-        return fabricationYear;
-    }
-
-    public void setFabricationYear(String fabricationYear) {
-        this.fabricationYear = fabricationYear;
     }
 }

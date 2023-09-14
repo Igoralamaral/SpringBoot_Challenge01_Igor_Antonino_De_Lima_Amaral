@@ -17,12 +17,12 @@ public class CarController {
     private CarService carService;
 
     @PostMapping
-    public Car createCar(@RequestBody @Valid Car car){
-        return carService.createCar(car);
+    public ResponseEntity<CarDTO> createCar(@RequestBody @Valid Car car){
+        return ResponseEntity.ok(carService.createCar(car));
     }
 
     @GetMapping("/{chassiId}")
-    public ResponseEntity<?> findById(@PathVariable Long chassiId){
-        return carService.findById(chassiId);
+    public ResponseEntity<CarDTO> findById(@PathVariable Long chassiId){
+        return ResponseEntity.ok(carService.findById(chassiId));
     }
 }

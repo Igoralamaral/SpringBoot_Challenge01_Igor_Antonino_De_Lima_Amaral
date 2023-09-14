@@ -17,7 +17,7 @@ public class ResourceExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
     public ResponseEntity<StandardError> NoSuchElementException(NoSuchElementException e, HttpServletRequest request){
-        StandardError error =new StandardError();
+        StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_FOUND.value());
         error.setError("ID not found");

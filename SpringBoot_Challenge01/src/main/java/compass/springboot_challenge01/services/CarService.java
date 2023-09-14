@@ -19,15 +19,20 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public Car createCar(@RequestBody Car car){
+    public CarDTO createCar(@RequestBody Car car){
         List<String> brands = List.of("Ford", "Chevrolet", "BMW", "Volvo");
         boolean isValidBrand = brands.stream().anyMatch(n -> car.getBrand().contentEquals(n));
-        return 
+        if(isValidBrand){
+            carRepository.save(car);
+            CarDTO carDTO = new CarDTO(car);
+            return carDTO;
+        }else{
+            throw new RuntimeException();
+        }
     }
-
-    public ResponseEntity<CarDTO> findById(Long id){
+    public CarDTO findById(Long id){
         Car car = carRepository.findById(id).get();
         CarDTO carDTO = new CarDTO(car);
-        return ResponseEntity.ok().body(carDTO);
+        return carDTO;
     }
 }
