@@ -4,6 +4,8 @@ import compass.springboot_challenge01.models.Car;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.Valid;
+
 @Getter
 @Setter
 public class CarDTO {

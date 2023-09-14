@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
+import javax.validation.constraints.Null;
 import java.time.Instant;
 import java.util.NoSuchElementException;
 
@@ -23,40 +24,38 @@ public class ResourceExceptionHandler {
         error.setError("ID not found");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<StandardError> MethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request){
         StandardError error =new StandardError();
         error.setTimestamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Invalid argument");
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setError("Please, complete all fields");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<StandardError> MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request){
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Invalid type of data");
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setError("Invalid type of data, insert just numbers for ID parameter");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
-
-    @ExceptionHandler(NullPointerException.class)
-    public ResponseEntity<StandardError> NullPointerException(NullPointerException e, HttpServletRequest request){
+    @ExceptionHandler(BrandNotAccepted.class)
+    public ResponseEntity<StandardError> BrandNotAccepted(BrandNotAccepted e, HttpServletRequest request){
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
-        error.setStatus(HttpStatus.NOT_FOUND.value());
-        error.setError("Null not permited");
+        error.setStatus(HttpStatus.BAD_REQUEST.value());
+        error.setError("Please choose one of this brands: Ford, Chevrolet, BMW or Volvo");
         error.setMessage(e.getMessage());
         error.setPath(request.getRequestURI());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(error);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
-
 }

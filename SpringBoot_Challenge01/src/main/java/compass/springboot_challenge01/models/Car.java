@@ -2,6 +2,7 @@ package compass.springboot_challenge01.models;
 
 import jakarta.persistence.*;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.validation.constraints.NotNull;
 
@@ -13,16 +14,16 @@ public class Car {
     @Column(name = "chassi_id")
     private Long chassiId;
 
-    @NotBlank(message = "Insert a valid model")
+    @NotEmpty(message = "Insert a valid model")
     private String model;
 
-    @NotBlank(message = "Choose one of this brands: Ford, Chevrolet, BMW or Volvo")
+    @NotEmpty(message = "Choose one of this brands: Ford, Chevrolet, BMW or Volvo")
     private String brand;
 
-    @NotBlank(message = "Insert a valid color")
+    @NotEmpty(message = "Insert a valid color")
     private String color;
 
-    @NotBlank(message = "Insert a valid fabrication year in format: year/year")
+    @NotEmpty(message = "Insert a valid fabrication year in format: year/year")
     @Column(name = "fabrication_year")
     private String fabricationYear;
 
