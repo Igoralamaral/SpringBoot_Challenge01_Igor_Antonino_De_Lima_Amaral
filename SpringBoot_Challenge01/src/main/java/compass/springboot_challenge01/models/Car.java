@@ -2,29 +2,25 @@ package compass.springboot_challenge01.models;
 
 import jakarta.persistence.*;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
-
-import javax.validation.constraints.NotNull;
 
 @Entity
+@Table(name="cars")
 public class Car {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "chassi_id")
     private Long chassiId;
 
-    @NotEmpty(message = "Insert a valid model")
+    @NotBlank
     private String model;
 
-    @NotEmpty(message = "Choose one of this brands: Ford, Chevrolet, BMW or Volvo")
+    @NotBlank
     private String brand;
 
-    @NotEmpty(message = "Insert a valid color")
+    @NotBlank
     private String color;
 
-    @NotEmpty(message = "Insert a valid fabrication year in format: year/year")
-    @Column(name = "fabrication_year")
+    @NotBlank
     private String fabricationYear;
 
     public Car(String model, String brand, String color, String fabricationYear) {
