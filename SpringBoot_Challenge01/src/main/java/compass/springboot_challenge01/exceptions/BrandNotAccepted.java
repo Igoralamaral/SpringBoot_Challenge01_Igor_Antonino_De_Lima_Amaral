@@ -1,8 +1,8 @@
 package compass.springboot_challenge01.exceptions;
 
-public class BrandNotAccepted extends RuntimeException{
+public class BrandNotAccepted extends RuntimeException {
 
-    public BrandNotAccepted(String msg){
+    public BrandNotAccepted(String msg) {
         super(msg);
     }
 

@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import javax.validation.constraints.Null;
 import java.time.Instant;
 import java.util.NoSuchElementException;
 
@@ -17,7 +16,7 @@ import java.util.NoSuchElementException;
 public class ResourceExceptionHandler {
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<StandardError> NoSuchElementException(NoSuchElementException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> NoSuchElementException(NoSuchElementException e, HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.NOT_FOUND.value());
@@ -28,8 +27,8 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<StandardError> MethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request){
-        StandardError error =new StandardError();
+    public ResponseEntity<StandardError> MethodArgumentNotValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+        StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
         error.setError("Please, complete all fields");
@@ -39,7 +38,7 @@ public class ResourceExceptionHandler {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public ResponseEntity<StandardError> MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request){
+    public ResponseEntity<StandardError> MethodArgumentTypeMismatchException(MethodArgumentTypeMismatchException e, HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -48,8 +47,9 @@ public class ResourceExceptionHandler {
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
     @ExceptionHandler(BrandNotAccepted.class)
-    public ResponseEntity<StandardError> BrandNotAccepted(BrandNotAccepted e, HttpServletRequest request){
+    public ResponseEntity<StandardError> BrandNotAccepted(BrandNotAccepted e, HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -58,8 +58,9 @@ public class ResourceExceptionHandler {
         error.setPath(request.getRequestURI());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
     }
+
     @ExceptionHandler(InvalidFabricationYear.class)
-    public ResponseEntity<StandardError> InvalidFabricationYear(InvalidFabricationYear e, HttpServletRequest request){
+    public ResponseEntity<StandardError> InvalidFabricationYear(InvalidFabricationYear e, HttpServletRequest request) {
         StandardError error = new StandardError();
         error.setTimestamp(Instant.now());
         error.setStatus(HttpStatus.BAD_REQUEST.value());

@@ -2,7 +2,8 @@ package compass.springboot_challenge01.services;
 
 import compass.springboot_challenge01.dtos.CarDTO;
 import compass.springboot_challenge01.enums.BrandsEnum;
-import compass.springboot_challenge01.exceptions.*;
+import compass.springboot_challenge01.exceptions.BrandNotAccepted;
+import compass.springboot_challenge01.exceptions.InvalidFabricationYear;
 import compass.springboot_challenge01.models.Car;
 import compass.springboot_challenge01.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,10 +11,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 @Service
 public class CarService {
@@ -21,17 +23,17 @@ public class CarService {
     @Autowired
     private CarRepository carRepository;
 
-    public CarDTO createCar(@RequestBody @Valid Car car){
+    public CarDTO createCar(@RequestBody @Valid Car car) {
         //validating date in format "year/year"
         boolean isValidData = car.getFabricationYear().matches("^([0-9]{4})+[/]+([0-9]{4})");
-        if(!isValidData){
+        if (!isValidData) {
             throw new InvalidFabricationYear("Please insert a valid date in format yyyy/yyyy");
         }
         String data = car.getFabricationYear();
         String[] dataSplit = data.split("/");
         Integer year1 = Integer.parseInt(dataSplit[0]);
         Integer year2 = Integer.parseInt(dataSplit[1]);
-        if((year1 < 1970 || year2 < 1970) || (year1 > 2024 || year2 > 2024)){
+        if ((year1 < 1970 || year2 < 1970) || (year1 > 2024 || year2 > 2024)) {
             throw new InvalidFabricationYear("Date under 1970 or above 2024 are not allowed");
         }
 
@@ -67,16 +69,16 @@ public class CarService {
     public CarDTO updatePartialCar(Long id, @RequestBody @Valid Map<String, Object> fields) {
         Car carFind = carRepository.findById(id).get();
         fields.forEach((propertyName, propertyValue) -> {
-             Field field = ReflectionUtils.findField(Car.class, propertyName);
-             field.setAccessible(true);
-             ReflectionUtils.setField(field, carFind, propertyValue);
+            Field field = ReflectionUtils.findField(Car.class, propertyName);
+            field.setAccessible(true);
+            ReflectionUtils.setField(field, carFind, propertyValue);
         });
         this.createCar(carFind);
         CarDTO carDTO = new CarDTO(carFind);
         return carDTO;
     }
 
-    public void deleteCar(Long id){
+    public void deleteCar(Long id) {
         Car car = carRepository.findById(id).get();
         carRepository.deleteById(car.getChassiId());
     }

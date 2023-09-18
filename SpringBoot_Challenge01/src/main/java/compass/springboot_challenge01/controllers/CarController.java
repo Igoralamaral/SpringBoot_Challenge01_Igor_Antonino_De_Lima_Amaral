@@ -19,27 +19,27 @@ public class CarController {
     private CarService carService;
 
     @PostMapping
-    public ResponseEntity<CarDTO> createCar(@RequestBody @Valid Car car){
+    public ResponseEntity<CarDTO> createCar(@RequestBody @Valid Car car) {
         return ResponseEntity.status(HttpStatus.CREATED).body(carService.createCar(car));
     }
 
     @GetMapping("/{chassiId}")
-    public ResponseEntity<CarDTO> findById(@PathVariable Long chassiId){
+    public ResponseEntity<CarDTO> findById(@PathVariable Long chassiId) {
         return ResponseEntity.ok(carService.findById(chassiId));
     }
 
     @PutMapping("/{chassiId}")
-    public ResponseEntity<CarDTO> updateCar(@PathVariable Long chassiId, @RequestBody @Valid Car car){
+    public ResponseEntity<CarDTO> updateCar(@PathVariable Long chassiId, @RequestBody @Valid Car car) {
         return ResponseEntity.ok(carService.updateCar(chassiId, car));
     }
 
     @PatchMapping("/{chassiId}")
-    public ResponseEntity<CarDTO> updatePartialCar(@PathVariable Long chassiId, @RequestBody @Valid  Map<String, Object> fields){
+    public ResponseEntity<CarDTO> updatePartialCar(@PathVariable Long chassiId, @RequestBody @Valid Map<String, Object> fields) {
         return ResponseEntity.ok(carService.updatePartialCar(chassiId, fields));
     }
 
     @DeleteMapping("/{chassiId}")
-    public void deleteCar(@PathVariable Long chassiId){
+    public void deleteCar(@PathVariable Long chassiId) {
         carService.deleteCar(chassiId);
     }
 }
