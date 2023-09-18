@@ -5,7 +5,6 @@ import compass.springboot_challenge01.models.Car;
 import compass.springboot_challenge01.services.CarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,5 +25,10 @@ public class CarController {
     @GetMapping("/{chassiId}")
     public ResponseEntity<CarDTO> findById(@PathVariable Long chassiId){
         return ResponseEntity.ok(carService.findById(chassiId));
+    }
+
+    @PutMapping("/{chassiId}")
+    public ResponseEntity<CarDTO> updateCar(@PathVariable Long chassiId, @RequestBody @Valid Car car){
+        return ResponseEntity.ok(carService.updateCar(chassiId, car));
     }
 }

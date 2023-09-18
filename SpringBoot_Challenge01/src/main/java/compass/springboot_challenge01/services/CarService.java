@@ -5,18 +5,12 @@ import compass.springboot_challenge01.enums.BrandsEnum;
 import compass.springboot_challenge01.exceptions.*;
 import compass.springboot_challenge01.models.Car;
 import compass.springboot_challenge01.repositories.CarRepository;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.RequestEntity;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import javax.validation.Valid;
 import java.util.*;
-import java.util.stream.Stream;
 
 @Service
 public class CarService {
@@ -53,6 +47,17 @@ public class CarService {
     public CarDTO findById(Long id) {
         Car car = carRepository.findById(id).get();
         CarDTO carDTO = new CarDTO(car);
+        return carDTO;
+    }
+
+    public CarDTO updateCar(Long id, @RequestBody @Valid Car car) {
+        Car carFind = carRepository.findById(id).get();
+        carFind.setModel(car.getModel());
+        carFind.setBrand(car.getBrand());
+        carFind.setColor(car.getColor());
+        carFind.setFabricationYear(car.getFabricationYear());
+        this.createCar(carFind);
+        CarDTO carDTO = new CarDTO(carFind);
         return carDTO;
     }
 }
