@@ -60,4 +60,8 @@ public class CarService {
         CarDTO carDTO = new CarDTO(carFind);
         return carDTO;
     }
+
+    public void deleteCar(Long id){
+        carRepository.deleteById(id);
+    }
 }

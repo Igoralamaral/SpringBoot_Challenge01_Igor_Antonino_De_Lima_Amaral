@@ -31,4 +31,9 @@ public class CarController {
     public ResponseEntity<CarDTO> updateCar(@PathVariable Long chassiId, @RequestBody @Valid Car car){
         return ResponseEntity.ok(carService.updateCar(chassiId, car));
     }
+
+    @DeleteMapping("/{chassiId}")
+    public void deleteCar(@PathVariable Long chassiId){
+        carService.deleteCar(chassiId);
+    }
 }
