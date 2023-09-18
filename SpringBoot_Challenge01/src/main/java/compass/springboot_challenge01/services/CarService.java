@@ -7,9 +7,12 @@ import compass.springboot_challenge01.models.Car;
 import compass.springboot_challenge01.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.lang.reflect.Field;
 import java.util.*;
 
 @Service
@@ -34,7 +37,7 @@ public class CarService {
 
         //validating if a brand is accepted
         List<BrandsEnum> brands = Arrays.asList(BrandsEnum.values());
-        boolean isValidBrand = brands.stream().anyMatch(n -> car.getBrand().equalsIgnoreCase(n.toString()));;
+        boolean isValidBrand = brands.stream().anyMatch(n -> car.getBrand().equalsIgnoreCase(n.toString()));
         if (isValidBrand) {
             carRepository.save(car);
             CarDTO carDTO = new CarDTO(car);
@@ -61,7 +64,20 @@ public class CarService {
         return carDTO;
     }
 
+    public CarDTO updatePartialCar(Long id, @RequestBody @Valid Map<String, Object> fields) {
+        Car carFind = carRepository.findById(id).get();
+        fields.forEach((propertyName, propertyValue) -> {
+             Field field = ReflectionUtils.findField(Car.class, propertyName);
+             field.setAccessible(true);
+             ReflectionUtils.setField(field, carFind, propertyValue);
+        });
+        this.createCar(carFind);
+        CarDTO carDTO = new CarDTO(carFind);
+        return carDTO;
+    }
+
     public void deleteCar(Long id){
-        carRepository.deleteById(id);
+        Car car = carRepository.findById(id).get();
+        carRepository.deleteById(car.getChassiId());
     }
 }

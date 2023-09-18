@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/cars")
@@ -30,6 +31,11 @@ public class CarController {
     @PutMapping("/{chassiId}")
     public ResponseEntity<CarDTO> updateCar(@PathVariable Long chassiId, @RequestBody @Valid Car car){
         return ResponseEntity.ok(carService.updateCar(chassiId, car));
+    }
+
+    @PatchMapping("/{chassiId}")
+    public ResponseEntity<CarDTO> updatePartialCar(@PathVariable Long chassiId, @RequestBody @Valid  Map<String, Object> fields){
+        return ResponseEntity.ok(carService.updatePartialCar(chassiId, fields));
     }
 
     @DeleteMapping("/{chassiId}")
