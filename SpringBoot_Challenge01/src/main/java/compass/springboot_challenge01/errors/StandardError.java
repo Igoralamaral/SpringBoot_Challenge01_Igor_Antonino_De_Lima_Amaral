@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 
-public class StandardError implements Serializable{
+public class StandardError implements Serializable {
 
     private Instant timestamp;
     private Integer status;
@@ -12,7 +12,7 @@ public class StandardError implements Serializable{
     private String message;
     private String path;
 
-    public StandardError(){
+    public StandardError() {
 
     }
 

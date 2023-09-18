@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import org.hibernate.validator.constraints.NotBlank;
 
 @Entity
-@Table(name="cars")
+@Table(name = "cars")
 public class Car {
 
     @Id
